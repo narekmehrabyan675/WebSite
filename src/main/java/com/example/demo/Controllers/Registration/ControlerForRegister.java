@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Controllers.Registration;
 
 import com.example.demo.MySQL.User;
 import com.example.demo.repo.UserRepository;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
 import com.example.demo.MySQL.User;
 import com.example.demo.Services.GetCurrentUser;

@@ -38,6 +38,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
                         .requestMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
                         .requestMatchers("/delete/**").hasAuthority("ADMIN")
+                        .requestMatchers("/user/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

@@ -23,6 +23,7 @@
         <th>ID</th>
         <th>Username</th>
         <th>Password</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +31,15 @@
         <td th:text="${user.id}"></td>
         <td th:text="${user.username}"></td>
         <td th:text="${user.password}"></td>
-
+        <td>
+            <!-- Form for editing a user -->
+            <form th:action="@{/user/edit}" method="post">
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <input type="text" name="username" th:value="${user.username}" placeholder="Username" />
+                <input type="text" name="password" th:value="${user.password}" placeholder="Password" />
+                <button type="submit">Save</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -12,4 +12,8 @@ public interface UserRepository extends CrudRepository<com.example.demo.MySQL.Us
     //User findByUsername(String username);
     @Query("SELECT u FROM User u WHERE u.username = :username")
     public User getUserByUsername(@Param("username") String username);
+    @Query("SELECT u FROM User u WHERE u.activationCode = :activationcode")
+    public User findUserByActivationCode(@Param("activationcode")String code);
+//    @Query("SELECT u FROM User u WHERE u.activationcode = :activationcode")
+//    public User getUserByActivationCode(@Param("activationcode") String activationcode);
 }

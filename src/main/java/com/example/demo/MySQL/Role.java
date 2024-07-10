@@ -27,5 +27,6 @@ public class Role {
     public String toString() {
         return name;
     }
+
     // remaining getters and setters
 }

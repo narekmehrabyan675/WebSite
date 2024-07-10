@@ -16,9 +16,13 @@ public class User implements UserDetails {
     private Integer id;
     @Column(name = "username")
     private String username;
-    //@Column(name = "password")
+    @Column(name = "password")
     private String password;
     private boolean enabled = true;
+    @Column(name="email")
+    private String email;
+    @Column(name="activationcode")
+    private String activationCode;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -28,6 +32,25 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+
+
+
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Override
     public boolean isEnabled() {

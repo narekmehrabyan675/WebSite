@@ -26,6 +26,14 @@ public class MyUserDetail implements UserDetails {
         return authorities;
     }
 
+    public String getActivationCode(){
+        return user.getActivationCode();
+    }
+
+    public User getUser(){
+        return user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();

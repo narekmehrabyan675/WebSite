@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+</head>
+<body>
+<h1 th:text="|Hello, ${username}!|"></h1>
+<h2>Activate</h2>
+<form th:action="@{/activate/{activationcode}(activationcode=${activationcode})}" method="post">
+    <div>
+        <label for="activationcode">Activation Code:</label>
+        <input type="text" id="activationcode" name="activationcode" th:value="${activationcode}" required>
+    </div>
+    <div>
+        <h1 th:text="|Activation code is, ${activationcode}|"></h1>
+    </div>
+    <button type="submit">Submit Activation Code</button>
+</form>
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+</body>
+</html>

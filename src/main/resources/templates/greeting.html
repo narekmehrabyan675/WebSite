@@ -7,7 +7,7 @@
 <body>
 <h1 th:text="|Hello, ${username}!|"></h1>
 <div>
-  <form method="POST" enctype="multipart/form-data" action="/upload">
+  <form id="uploadForm" enctype="multipart/form-data" th:action="@{/upload}" method="post">
     <table>
       <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
       <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
@@ -25,7 +25,7 @@
 
 <!-- Logout button -->
 <div>
-  <form method="post" action="/logout">
+  <form id="logoutForm" th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>
   </form>
 </div>

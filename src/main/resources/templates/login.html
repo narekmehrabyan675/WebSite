@@ -1,26 +1,102 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Spring Security Example </title>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("loginForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                const formData = {
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value,
+                    rememberMe: document.getElementById("rememberMe").checked
+                };
+
+                fetch('/auth/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(data => {
+                        // Handle the response data
+                        console.log('Success:', data);
+                        // Redirect to /home/welcome
+                        window.location.href = '/home/welcome';
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+
+            function getCookie(name) {
+                let cookieArr = document.cookie.split(";");
+                for (let i = 0; i < cookieArr.length; i++) {
+                    let cookiePair = cookieArr[i].split("=");
+                    if (name === cookiePair[0].trim()) {
+                        return decodeURIComponent(cookiePair[1]);
+                    }
+                }
+                return null;
+            }
+
+            // Извлечение токена из cookies
+            const jwtToken = getCookie("JWT_TOKEN");
+            if (jwtToken) {
+                console.log("JWT Token from cookies:", jwtToken);
+
+                // Пример выполнения защищенного запроса с использованием токена
+                fetch('/protected/resource', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + jwtToken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(data => {
+                        console.log('Protected resource data:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                console.error('JWT Token not found in cookies.');
+            }
+        });
+    </script>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.error}">
-
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="login" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <tr>
-        <td>Remember Me:</td>
-        <td><input type="checkbox" name="remember-me" /></td>
-    </tr>
-    <div><input type="submit" value="Sign In"/></div>
+<form id="loginForm">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="rememberMe">Remember Me:</label>
+        <input type="checkbox" id="rememberMe" name="rememberMe">
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
 </form>
 </body>
 </html>

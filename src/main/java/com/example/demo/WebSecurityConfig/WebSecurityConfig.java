@@ -1,16 +1,10 @@
 package com.example.demo.WebSecurityConfig;
 
-import com.example.demo.Controllers.AuthController;
 import com.example.demo.Services.UserDetailsServiceImpl;
 import com.example.demo.WebSecurityConfig.Tokens.JWTRefreshFilter;
 import com.example.demo.WebSecurityConfig.Tokens.JwtAuthEntryPoint;
 import com.example.demo.WebSecurityConfig.Tokens.JwtGenerator;
 import com.example.demo.WebSecurityConfig.Tokens.JWTAuthenticationFilter;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +14,11 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -40,9 +29,6 @@ public class WebSecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final JwtGenerator jwtGenerator;
     private final JWTRefreshFilter jwtRefreshFilter;
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
 
     @Autowired
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder,
@@ -87,7 +73,6 @@ public class WebSecurityConfig {
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(jwtRefreshFilter, JWTAuthenticationFilter.class);
-        ;
 
         return http.build();
     }

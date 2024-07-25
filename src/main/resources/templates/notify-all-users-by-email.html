@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form id="emailSendForm" method="post" action="/notify/byemail">
+    <div th:include="fragments :: homePage">
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required>
+    </div>
+        <button type="submit" id="submit">Send</button>
+    </div>
+</form>
+</body>
+</html>

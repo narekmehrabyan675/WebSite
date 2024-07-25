@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head">
+    <title>Image Upload and Display</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:fragment="uploadForm">
+    <form id="uploadForm" enctype="multipart/form-data" th:action="@{/upload}" method="post">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+<div th:fragment="showFiles">
+    <ul>
+        <li th:each="file : ${files}">
+            <a th:href="@{/uploads/{file}(file=${file})}" th:text="${file}"></a>
+        </li>
+    </ul>
+</div>
+<div th:fragment="logoutForm">
+    <form id="logoutForm" th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+<div th:fragment="adminEdit">
+<button th:if="${role} == '[ADMIN]'">
+    <a th:href="@{/user/get}">Edit</a>
+</button>
+</div>
+<div th:fragment="homePage">
+    <button>
+        <a th:href="@{/home/welcome}">Home Page</a>
+    </button>
+</div>
+<div th:fragment="mailSender">
+    <button th:if="${role} == '[ADMIN]'">
+        <a th:href="@{/notify/byemail}">Send</a>
+    </button>
+</div>
+
+
+</body>
+</html>

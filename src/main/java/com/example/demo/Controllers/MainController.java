@@ -21,7 +21,10 @@ public class MainController {
         // Get the user details from SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = (authentication != null && authentication.getPrincipal() instanceof UserDetails) ? ((UserDetails) authentication.getPrincipal()).getUsername() : "Guest";
-
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            model.addAttribute("role", userDetails.getAuthorities().toString());
+        }
         // Add the username to the model to display in the view
         model.addAttribute("username", username);
 

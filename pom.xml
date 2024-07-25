@@ -163,6 +163,19 @@
 			<version>2.3.1</version> <!-- Версия зависит от вашего проекта и требований -->
 		</dependency>
 
+<!--		For Testing-->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.19.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>4.19.1</version>
+		</dependency>
+
 
 	</dependencies>
 

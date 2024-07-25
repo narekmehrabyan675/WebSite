@@ -1,34 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>Image Upload and Display</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:replace="fragments :: html_head">
+<!--  <title>Image Upload and Display</title>-->
+<!--  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
 </head>
 <body>
 <h1 th:text="|Hello, ${username}!|"></h1>
-<div>
-  <form id="uploadForm" enctype="multipart/form-data" th:action="@{/upload}" method="post">
-    <table>
-      <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-      <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-    </table>
-  </form>
+<h1 th:text="|Hello, ${role}!|"></h1>
+
+<div th:include="fragments :: uploadForm">
 </div>
 
-<div>
-  <ul>
-    <li th:each="file : ${files}">
-      <a th:href="@{/uploads/{file}(file=${file})}" th:text="${file}"></a>
-    </li>
-  </ul>
+<div th:include="fragments :: showFiles">
 </div>
+
+<div th:include="fragments :: adminEdit">
+</div>
+
+<div th:include="fragments :: mailSender">
+</div>
+
 
 <!-- Logout button -->
-<div>
-  <form id="logoutForm" th:action="@{/logout}" method="post">
-    <button type="submit">Logout</button>
-  </form>
+<div th:include="fragments :: logoutForm">
 </div>
+
+
 
 </body>
 </html>

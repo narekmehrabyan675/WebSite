@@ -22,7 +22,6 @@ public class UserController {
     PasswordEncoder passwordEncoder;
 
     @GetMapping("/get")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public String userList(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "userList";

@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>All Users</title>
+    </div>
+    <!--Home page button-->
+    <div th:include="fragments :: homePage">
+    </div>
+
 </head>
 <body>
 <h1>All Users</h1>
@@ -15,7 +20,6 @@
     Welcome <b><span sec:authentication="name">Username</span></b>
     &nbsp;
     <i><span sec:authentication="principal.roles">Roles</span></i>
-</div>
 
 <table>
     <thead>

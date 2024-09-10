@@ -37,9 +37,20 @@
 </div>
 <div th:fragment="mailSender">
     <button th:if="${role} == '[ADMIN]'">
-        <a th:href="@{/notify/byemail}">Send</a>
+        <a th:href="@{/notify/byemail}">Notificate all users via Email</a>
     </button>
 </div>
+<div th:fragment="Messenger">
+    <button>
+        <a th:href="@{/messages/send}">Messenger</a>
+    </button>
+</div>
+<div th:fragment="getedMessages">
+    <button>
+        <a th:href="@{/messages/received}">Geted Messages</a>
+    </button>
+</div>
+
 
 
 </body>

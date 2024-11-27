@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Posts</title>
+</head>
+<body>
+<form action="/posts" method="post" enctype="multipart/form-data">
+    <textarea name="content" placeholder="Enter post content"></textarea>
+    <input type="file" name="image" />
+    <button type="submit">Create Post</button>
+</form>
+
+<ul>
+    <li th:each="post : ${posts}">
+        <p th:text="${post.content}"></p>
+        <img th:if="${post.imageUrl}" th:src="@{${post.imageUrl}}" alt="Post Image"/>
+        <p>Posted by: <span th:text="${post.userId}"></span></p>
+        <button th:data-post-id="${post.id}"
+                th:text="'Like (' + ${post.likes.size()} + ')'"
+                onclick="likePost(this.dataset.postId)">
+        </button>
+    </li>
+</ul>
+
+<script>
+    function likePost(postId) {
+        fetch(`/likes/${postId}`, {
+            method: 'POST'
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error liking post');
+            }
+        });
+    }
+</script>
+</body>
+</html>

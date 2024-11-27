@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Received Messages</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Received Messages</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Sender Username</th>
+            <th>Message</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+<!--        <tr th:each="user : ${usersBySenderId}">-->
+<!--            <td th:text="${user.username}"></td>-->
+<!--        </tr>-->
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.senderId}">Sender</td> <!-- Optionally, you can fetch sender username if necessary -->
+            <td th:text="${message.senderName}">Timestamp</td>
+            <td th:text="${message.content}">Message</td>
+            <td th:text="${message.timestamp}">Timestamp</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

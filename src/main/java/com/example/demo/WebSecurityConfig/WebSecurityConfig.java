@@ -45,7 +45,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/auth/token").permitAll()
 
-                        .requestMatchers("/", "/reg/registration", "/user", "/activate/**" , "/auth/**", "user/get", "/favicon.ico" , "/error").permitAll()
+                        .requestMatchers("/*", "/reg/registration", "/user", "/activate/**" , "/auth/**", "user/get", "/favicon.ico" , "/error").permitAll()
                         .requestMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
                         .requestMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
                         .requestMatchers("/delete/**").hasAuthority("ADMIN")

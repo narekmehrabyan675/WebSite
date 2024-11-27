@@ -3,85 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("loginForm").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent the default form submission
-
-                const formData = {
-                    username: document.getElementById("username").value,
-                    password: document.getElementById("password").value,
-                    rememberMe: document.getElementById("rememberMe").checked
-                };
-
-                fetch('/auth/token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        throw new Error('Network response was not ok.');
-                    })
-                    .then(data => {
-                        // Handle the response data
-                        console.log('Success:', data);
-                        // Redirect to /home/welcome
-                        window.location.href = '/home/welcome';
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            });
-
-            function getCookie(name) {
-                let cookieArr = document.cookie.split(";");
-                for (let i = 0; i < cookieArr.length; i++) {
-                    let cookiePair = cookieArr[i].split("=");
-                    if (name === cookiePair[0].trim()) {
-                        return decodeURIComponent(cookiePair[1]);
-                    }
-                }
-                return null;
-            }
-
-            // Извлечение токена из cookies
-            const jwtToken = getCookie("JWT_TOKEN");
-            if (jwtToken) {
-                console.log("JWT Token from cookies:", jwtToken);
-
-                // Пример выполнения защищенного запроса с использованием токена
-                fetch('/protected/resource', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + jwtToken,
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        throw new Error('Network response was not ok.');
-                    })
-                    .then(data => {
-                        console.log('Protected resource data:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            } else {
-                console.error('JWT Token not found in cookies.');
-            }
-        });
-    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-<form id="loginForm">
+<!-- Форма логина -->
+<form id="loginForm" action="/auth/token">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
@@ -90,6 +16,10 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
     </div>
+
+    <!-- Контейнер для reCAPTCHA -->
+    <div class="g-recaptcha" data-sitekey="6Ldg_IoqAAAAAEc7tVsxRE3Xl2c0V_dN6qvHsxRT"></div>
+
     <div>
         <label for="rememberMe">Remember Me:</label>
         <input type="checkbox" id="rememberMe" name="rememberMe">
@@ -98,5 +28,52 @@
         <button type="submit" id="submit">Login</button>
     </div>
 </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Останавливаем стандартное поведение формы
+
+            // Проверка, что reCAPTCHA заполнена
+            const recaptchaResponse = document.querySelector('[name="g-recaptcha-response"]').value;
+            if (!recaptchaResponse) {
+                alert("Please complete the reCAPTCHA verification.");
+                return;
+            }
+
+            // Сбор данных из формы
+            const formData = {
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value,
+                rememberMe: document.getElementById("rememberMe").checked,
+                recaptchaToken: recaptchaResponse // Токен reCAPTCHA
+            };
+
+            // Отправка данных на сервер
+            fetch('/auth/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    // Обработка успешного ответа
+                    console.log('Success:', data);
+                    // Перенаправление на страницу после успешного входа
+                    window.location.href = '/home/welcome';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
 </body>
 </html>

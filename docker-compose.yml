@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: W7301@jqir#
+      MYSQL_DATABASE: mydbtest
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  springboot-app:
+    build:
+      context: .
+    container_name: springboot-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/mydbtest
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: W7301@jqir#
+
+
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/itproger.messages
+
+      MAIL_HOST: smtp.example.com
+      MAIL_PORT: 587
+      MAIL_USERNAME: your_email@example.com
+      MAIL_PASSWORD: your_password
+
+      UPLOAD_DIR: /uploads
+      MAX_FILE_SIZE: 10MB
+      MAX_REQUEST_SIZE: 20MB
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - mongo
+    networks:
+      - app-network
+    env_file:
+      - .env
+
+networks:
+  app-network:
+    driver: bridge
